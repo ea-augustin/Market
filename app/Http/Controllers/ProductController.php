@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -36,31 +37,9 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function store()
+    public function store(ProductRequest $request)
     {
-        //The following format can be used:
-        // $product = Product::create([
-        //     'title' => request()->title,
-        //     'description' => request()->description,
-        //     'price' => request()->price,
-        //     'stock' => request()->stock,
-        //     'status' => request()->status,
-        // ]);
-        $rules = [
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:1000'],
-            'price' => ['required', 'min:1'],
-            'stock' => ['required', 'min:0'],
-            'status' => ['required', 'in:available,unavailable'],
-        ];
-        request()->validate($rules);
-
-        if (request()->stock == 0 && request()->status == 'available') {
-            // session()->flash('error', 'If available must have stock');
-            return redirect()->back()->withInput(request()->all())->withErrors('If available must have stock'); //with errors formula
-        } //this if is to ensure that stock cannot be available and 0
-
-        $product = Product::create(request()->all()); //This is a simplified format to create in the database
+        $product = Product::create($request->validated()); //This is a simplified format to create in the database
         return redirect()->route('products.index')->withSuccess("New Product with id {$product->id} was created"); // redirect is a new helper from laravel;
         // OR ->with(['success'=> "New Product with id {$product->id} was created"]); works with errors as well
     }
@@ -86,20 +65,9 @@ class ProductController extends Controller
         ]);
     }
 
-    public function update(Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        $rules = [
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:1000'],
-            'price' => ['required', 'min:1'],
-            'stock' => ['required', 'min:0'],
-            'status' => ['required', 'in:available,unavailable'],
-        ];
-        request()->validate($rules);
-
-
-
-        $product->update(request()->all());
+        $product->update($request->validated());
         return redirect()->route('products.index')->withSuccess("New Product with id {$product->id} was updated");; // redirect is a new helper from laravel
     }
 
