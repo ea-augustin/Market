@@ -1,5 +1,5 @@
-@extends('layouts.master')
-     @section('content')
-    <h1>Welcome</h1>
-    <p>Let's Start</p>
-   @endsection
+@extends('layouts.app')
+@section( 'content')
+<h1>Welcome</h1>
+<p>Let's Begin</p>
+@endsection
