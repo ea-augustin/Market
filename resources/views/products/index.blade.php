@@ -25,8 +25,10 @@
        @foreach ($products as $product)        
        <tr>
        <td>{{$product->id}}</td>
-           <td>{{$product->title}}</td>
-           <td>{{$product->description}}</td>
+       <td><a  class="btn btn-link" href="{{route('product.show', ['product'=>$product->id])}}">{{$product->title}}</a></td>
+           {{-- <td>{{$product->title}}</td> --}}
+           <td><a  class="btn btn-link" href="{{route('product.show', ['product'=>$product->id])}}">{{$product->description}}</a></td>
+           {{-- <td>{{$product->description}}</td> --}}
            <td>{{$product->price}}</td>
            <td>{{$product->stock}}</td>
            <td>{{$product->status}}</td>
