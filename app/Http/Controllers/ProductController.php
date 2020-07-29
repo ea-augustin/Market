@@ -18,7 +18,7 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
-    
+
     public function index()
     {
 
@@ -57,19 +57,19 @@ class ProductController extends Controller
 
         if (request()->stock == 0 && request()->status == 'available') {
             // session()->flash('error', 'If available must have stock');
-            return redirect()->back()->withInput(request()->all())->withErrors('If available must have stock');//with errors formula
+            return redirect()->back()->withInput(request()->all())->withErrors('If available must have stock'); //with errors formula
         } //this if is to ensure that stock cannot be available and 0
 
         $product = Product::create(request()->all()); //This is a simplified format to create in the database
         return redirect()->route('products.index')->withSuccess("New Product with id {$product->id} was created"); // redirect is a new helper from laravel;
-                                            // OR ->with(['success'=> "New Product with id {$product->id} was created"]); works with errors as well
+        // OR ->with(['success'=> "New Product with id {$product->id} was created"]); works with errors as well
     }
 
-    public function show($product)
+    public function show(Product $product) //Implicit model binging(Product $products)
     {
 
         //returing a view from a folder called products
-        $product = Product::findOrFail($product);
+        //$product = Product::findOrFail($product); // No needed due to model binding
 
         return view('products.show')->with([
 
@@ -78,15 +78,15 @@ class ProductController extends Controller
     }
 
 
-    public function edit($product)
+    public function edit(Product $product)
     {
-        $product = Product::findOrFail($product);
+
         return view('products.edit')->with([
             'product' => $product,
         ]);
     }
 
-    public function update($product)
+    public function update(Product $product)
     {
         $rules = [
             'title' => ['required', 'max:255'],
@@ -98,14 +98,14 @@ class ProductController extends Controller
         request()->validate($rules);
 
 
-        $product = Product::findOrFail($product);
+
         $product->update(request()->all());
         return redirect()->route('products.index')->withSuccess("New Product with id {$product->id} was updated");; // redirect is a new helper from laravel
     }
 
-    public function destroy($product)
+    public function destroy(Product $product)
     {
-        $product = Product::findOrFail($product);
+
         $product->delete();
         return redirect('products')->withSuccess("The product with id {$product->id} was deleted");;
     }

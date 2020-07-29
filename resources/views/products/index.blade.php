@@ -24,18 +24,19 @@
    <tbody>
        @foreach ($products as $product)        
        <tr>
-       <td>{{$product->id}}</td>
-       <td><a  class="btn btn-link" href="{{route('product.show', ['product'=>$product->id])}}">{{$product->title}}</a></td>
+        <td><a  class="btn btn-link" href="{{route('products.show', ['product'=>$product->id])}}">{{$product->id}}</a></td>
+       {{-- <td>{{$product->id}}</td> --}}
+       <td><a  class="btn btn-link" href="{{route('products.show', ['product'=>$product->id])}}">{{$product->title}}</a></td>
            {{-- <td>{{$product->title}}</td> --}}
-           <td><a  class="btn btn-link" href="{{route('product.show', ['product'=>$product->id])}}">{{$product->description}}</a></td>
+           <td><a  class="btn btn-link" href="{{route('products.show', ['product'=>$product->id])}}">{{$product->description}}</a></td>
            {{-- <td>{{$product->description}}</td> --}}
            <td>{{$product->price}}</td>
            <td>{{$product->stock}}</td>
            <td>{{$product->status}}</td>
            <td>
-              <a  class="btn btn-primary btn-sm" href="{{route('product.show', ['product'=>$product->id])}}">Show</a>{{-- this link takes us to a page showing single --}}
-              <a  class="btn btn-warning btn-sm" href="{{route('product.edit', ['product'=>$product->id])}}">Edit</a> {{-- this link takes us to the edit page --}} 
-           <form class="d-inline" method="POST" action="{{route('product.destroy', ['product'=>$product->id])}}">
+              <a  class="btn btn-primary btn-sm" href="{{route('products.show', ['product'=>$product->id])}}">Show</a>{{-- this link takes us to a page showing single --}}
+              <a  class="btn btn-warning btn-sm" href="{{route('products.edit', ['product'=>$product->id])}}">Edit</a> {{-- this link takes us to the edit page --}} 
+           <form class="d-inline" method="POST" action="{{route('products.destroy', ['product'=>$product->id])}}">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
