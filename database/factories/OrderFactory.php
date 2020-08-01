@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Order::class, function (Faker $faker) {
     return [
-        'statues'=>$faker->randomElement(['pending', 'paid', 'shipped']),
+        'status'=>$faker->randomElement(['pending', 'paid', 'shipped']),
     ];
 });

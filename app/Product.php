@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Order;
+use App\Cart;
 
 class Product extends Model
 {
@@ -21,5 +23,16 @@ class Product extends Model
         ,'status'
         
     ];
+
+  public function carts()
+   {
+       return $this->belongsToMany(Cart::class)->withPivot('quantity');
+   }
+  
+
+   public function orders()
+   {
+       return $this->belongsToMany(Order::class)->withPivot('quantity');
+   }
 
 }
