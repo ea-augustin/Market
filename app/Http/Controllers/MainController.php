@@ -13,9 +13,9 @@ class MainController extends Controller
     public function index(){
 
         //returing a view from a folder called products
-        
+        $products = Product::available()->get();
         return view('welcome')->with([
-            'products'=>Product::all(),
+            'products'=>$products,
         ]);
     }
 }
