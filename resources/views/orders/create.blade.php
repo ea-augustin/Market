@@ -1,6 +1,12 @@
 @extends('layouts.app')
      @section('content')
     <h1>Order Details</h1>
+   <div class="text-right mb-3">
+    <form class="d-inline" method="POST" action="{{route('orders.store')}}">
+        @csrf
+        <button class="btn btn-success btn-sm" type="submit">Confirm Order</button>
+       </form>
+   </div>
 
    <div  class=" table table-responsive">
    <table class=" table table-striped">

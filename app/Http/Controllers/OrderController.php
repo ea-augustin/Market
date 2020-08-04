@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\product;
+use App\User;
 use App\Cart;
 use Illuminate\Http\Request;
 use App\Services\CartService;
@@ -14,6 +16,8 @@ class OrderController extends Controller
     public function __construct(CartService $cartService)
     {
         $this->cartService = $cartService;
+
+        $this->middleware('auth');
     }
 
     /**
@@ -40,7 +44,22 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $user= $request->user();
+
+       $order= $user->orders()->create([
+           'status'=>'pending',
+       ]);
+       
+       $cart = $this->cartService->getFromCookie();
+       $cartProductsWithQuantity=$cart->products->mapWithKeys(function($product){
+
+           $elements[$product->id] = ['quantity'=>$product->pivot->quantity];
+           return $elements;
+       });
+
+       $order->products()->attach($cartProductsWithQuantity->toArray());
+        
+       return redirect()->route('orders.payments.create',['order'=>$order->id]);
     }
 
     
