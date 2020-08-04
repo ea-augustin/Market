@@ -8,8 +8,15 @@ use App\Product;
 class Cart extends Model
 {
     //
-    public function products(){
+    public function products()
+    {
 
         return $this->morphToMany(Product::class, 'productable')->withPivot('quantity');
+    }
+
+    public function getTotalAttribute()
+    {
+
+        return $this->products->pluck('total')->sum();
     }
 }

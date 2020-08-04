@@ -1,7 +1,7 @@
 @extends('layouts.app')
      @section('content')
     <h1>Order Details</h1>
-   
+
    <div  class=" table table-responsive">
    <table class=" table table-striped">
    <thead class="thead-light">
@@ -21,7 +21,7 @@
            <td><a  class="btn btn-link" href="{{route('products.show', ['product'=>$product->id])}}">{{$product->description}}</a></td>
            {{-- <td>{{$product->description}}</td> --}}
            <td>{{$product->pivot->quantity}}</td>
-           <td>£{{$product->pivot->quantity * $product->price}}</td>
+           <td>£{{$product->total}}</td>
        </tr>
        @endforeach
    </tbody>
@@ -34,5 +34,6 @@
 </tfoot>
    </table>
 </div>
+<h4 class="text-right"><strong>Grand Total: </strong>£{{$cart->total}}</h4>
 
 @endsection

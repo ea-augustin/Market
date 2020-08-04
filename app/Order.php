@@ -9,30 +9,39 @@ use App\Product;
 
 class Order extends Model
 {
-    
-     /**
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'status',   
+        'status',
         'customer_id',
     ];
 
-    
-    public function payment(){
+
+    public function payment()
+    {
 
         return $this->hasOne(Payment::class);
     }
 
-    public function user(){
+    public function user()
+    {
 
-        return $this->belongsTo(User::class,'customer_id');
+        return $this->belongsTo(User::class, 'customer_id');
     }
 
-    public function products(){
+    public function products()
+    {
 
-        return $this->morphToMany(Product::class,'productable')->withPivot('quantity');
+        return $this->morphToMany(Product::class, 'productable')->withPivot('quantity');
+    }
+
+    public function getTotalAttribute()
+    {
+
+        return $this->products->pluck('total')->sum();
     }
 }
