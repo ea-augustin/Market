@@ -29,13 +29,16 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
+                 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        @if(optional(auth()->user())->isAdmin())
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('products.index') }}">{{ __('Products') }}</a>
+                            <a class="nav-link" href="{{ route('panel') }}">Admin Panel</a>
+                            {{-- <a class="nav-link" href="{{ route('products.index') }}">{{ __('Products') }}</a> --}}
                         </li>
+                        @endif
                         @inject('cartService', 'App\Services\CartService')
                         <li class="nav-item">
                         <a class="nav-link" href="{{ route('carts.index') }}">{{ __('Cart') }} ({{$cartService->countProducts()}})</a>

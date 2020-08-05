@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/','MainController@index')->name('main');
+
 Route::resource('products.carts', 'ProductCartController')->only(['store','destroy']);
 
 Route::resource('carts', 'CartController')->only(['index']);
@@ -34,7 +35,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('products', 'ProductController');
+//Route::resource('products', 'ProductController');
 
 //**All the following routes were replaced by Route::resource('products', 'ProductController');
 

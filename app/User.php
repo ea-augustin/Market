@@ -20,8 +20,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'email', 
+        'name',
+        'email',
         'password',
     ];
 
@@ -43,7 +43,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-     /**
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -52,19 +52,26 @@ class User extends Authenticatable
         'admin_since',
     ];
 
-    public function orders(){
+    public function orders()
+    {
 
-        return $this->hasMany(Order::class,'customer_id');
+        return $this->hasMany(Order::class, 'customer_id');
     }
 
-    public function payments(){
+    public function payments()
+    {
 
         return $this->hasManyThrough(Payment::class, Order::class, 'customer_id');
     }
 
     public function image()
     {
-        return $this->morphOne(Image::class,'imageable');
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function isAdmin()
+    {
+        return $this->admin_since != null
+            && $this->admin_since->lessThanOrEqualTo(now());
     }
 }
-
